@@ -64,6 +64,7 @@ export default function App() {
           {items.map((item, index) => {
             return <Task text = {item.text} key={index} onPress={ () => handleTaskPressed(index)} isCompleted={item.isCompleted}></Task>;
           })}
+          
         </View>
         
       </View>
