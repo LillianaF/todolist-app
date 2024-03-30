@@ -11,8 +11,11 @@ export default function App() {
   const handleTaskPressed = async (index) => {
     console.log("Handle task pressed")
     let updatedTasks = [...items];
+    //console.log([...items])
     updatedTasks[index].isCompleted = !updatedTasks[index].isCompleted;
+    //updatedTasks.push(array.splice(index, 1)[0]);
     setItems(updatedTasks);
+
 
     try {
       await AsyncStorage.setItem('task-list', JSON.stringify([updatedTasks]));
@@ -31,6 +34,11 @@ export default function App() {
       console.error("Error saving tasks to AsyncStorage: ", error);
     }
   };
+
+  const renderItem = ({item, index}) => {
+    return (
+    <Task text = {item.text} key={index} onPress={ () => handleTaskPressed(index)} isCompleted={item.isCompleted}></Task>
+  )}
 
   useEffect(() => {
     const loadTasks = async () => {
@@ -54,19 +62,19 @@ export default function App() {
       saveTasks(updatedTasks);
     }
 
-  return (
-    
+  return ( 
+
     <View style={styles.container}>
       <View style = {styles.taskWrapper}>
         <Text style={styles.sectionTitle}>Today's Tasks</Text>
-
-        <View style = {styles.Items}>
-          {items.map((item, index) => {
-            return <Task text = {item.text} key={index} onPress={ () => handleTaskPressed(index)} isCompleted={item.isCompleted}></Task>;
-          })}
-          
+        <View style={styles.Items}>
+        <FlatList
+          data={items}
+          renderItem={renderItem}
+          keyExtractor={(item,index) => index.toString()}
+        />
         </View>
-        
+
       </View>
       <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? 'padding' : 'height'} style = {styles.addTaskContainer}>
         <AddTask onAddTaskPress={onAddTaskPress}/>
@@ -80,6 +88,7 @@ const styles = StyleSheet.create({
   addTaskContainer: {
     position: "absolute",
     bottom: 30,
+    //width: 390,
     width: "100%",
   },
   container: {

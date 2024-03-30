@@ -8,12 +8,16 @@ const AddTask = (props) => {
     const { onAddTaskPress } = props;
 
     const handleAddTask = () => {
-      onAddTaskPress(task);
-      
-      console.log("Handle new task pressed: ", task)
-      setTask();
-      Keyboard.dismiss()
+      if (task == "" || task == null) {
+        console.log("Empty")
+      } else {
+        onAddTaskPress(task);
+        console.log("Handle new task pressed: ", task)
+        setTask();
+        Keyboard.dismiss()
+      }
     }
+    
   return (
     <View style= {styles.container}>
         <TextInput

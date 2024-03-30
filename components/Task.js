@@ -20,7 +20,7 @@ const Task = (props) => {
 const styles = StyleSheet.create({
   checkmark: {
     color: '#000',
-    fonstSize: 15,
+    //fonstSize: 15,
   },
   completedText: {
     textDecorationLine: 'line-through',
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   },
   itemText: {
     fontSize: 17,
+    //maxWidth: 350,
     maxWidth: "80%",
   },
   checkBox: {
